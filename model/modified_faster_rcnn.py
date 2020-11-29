@@ -16,12 +16,13 @@ from model.backbone import TimmToVisionFPN, TimmToVision, resnet50_fpn
 def get_model(num_classes):
     # load an instance segmentation model pre-trained on COCO
     ## without FPN
-    m = timm.create_model('cspresnet50', pretrained=True, num_classes=0, global_pool='')
-    backbone = TimmToVision(m,1024)
+#     m = timm.create_model('cspresnet50', pretrained=True, num_classes=0, global_pool='')
+#     backbone = TimmToVision(m,1024)
     
     ## FPN official version
     #backbone = resnet50_fpn()
-    
+    m = timm.create_model('cspresnet50', features_only=True, pretrained=True)
+    backbone = TimmToVisionFPN(m)
     # ["0"] rather than [0]
     # roi_pooler = torchvision.ops.MultiScaleRoIAlign(featmap_names=['0', '1', '2', '3'],
     #                                                output_size=7,
